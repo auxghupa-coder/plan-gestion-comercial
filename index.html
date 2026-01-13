@@ -6,12 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tablero Procesos Gestión Comercial</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { 
+          font-family: 'Inter', sans-serif; 
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        
         @media print {
             .no-print { display: none !important; }
-            .page-break { page-break-before: always; }
+            body { background: white !important; padding: 0 !important; margin: 0 !important; }
+            #root { width: 100% !important; }
+            main { padding: 0 !important; background: white !important; }
+            .max-w-\[1400px\] { max-width: 100% !important; border: none !important; shadow: none !important; }
+            
+            /* Optimización para que quepa en una sola página larga si es posible */
+            @page {
+              margin: 0.5cm;
+              size: auto;
+            }
+            
+            /* Asegurar que los fondos se impriman */
+            * {
+              -webkit-print-color-adjust: exact !important;
+              print-color-adjust: exact !important;
+            }
+        }
+
+        /* Estilos para scrollbars finos */
+        ::-webkit-scrollbar {
+          width: 6px;
+          height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+          background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+          background: #cbd5e1;
+          border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: #94a3b8;
         }
     </style>
 <script type="importmap">
