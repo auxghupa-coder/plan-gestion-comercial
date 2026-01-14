@@ -1,5 +1,17 @@
-
 import { Phase } from './types';
+
+export const COLOR_CLASSES: Record<string, { bg: string, text: string, border: string, lightBg: string, hoverBorder: string }> = {
+  blue: { bg: 'bg-blue-600', text: 'text-blue-600', border: 'border-blue-600', lightBg: 'bg-blue-50', hoverBorder: 'hover:border-blue-400' },
+  cyan: { bg: 'bg-cyan-600', text: 'text-cyan-600', border: 'border-cyan-600', lightBg: 'bg-cyan-50', hoverBorder: 'hover:border-cyan-400' },
+  sky: { bg: 'bg-sky-600', text: 'text-sky-600', border: 'border-sky-600', lightBg: 'bg-sky-50', hoverBorder: 'hover:border-sky-400' },
+  indigo: { bg: 'bg-indigo-600', text: 'text-indigo-600', border: 'border-indigo-600', lightBg: 'bg-indigo-50', hoverBorder: 'hover:border-indigo-400' },
+  violet: { bg: 'bg-violet-600', text: 'text-violet-600', border: 'border-violet-600', lightBg: 'bg-violet-50', hoverBorder: 'hover:border-violet-400' },
+  purple: { bg: 'bg-purple-600', text: 'text-purple-600', border: 'border-purple-600', lightBg: 'bg-purple-50', hoverBorder: 'hover:border-purple-400' },
+  fuchsia: { bg: 'bg-fuchsia-600', text: 'text-fuchsia-600', border: 'border-fuchsia-600', lightBg: 'bg-fuchsia-50', hoverBorder: 'hover:border-fuchsia-400' },
+  pink: { bg: 'bg-pink-600', text: 'text-pink-600', border: 'border-pink-600', lightBg: 'bg-pink-50', hoverBorder: 'hover:border-pink-400' },
+  rose: { bg: 'bg-rose-600', text: 'text-rose-600', border: 'border-rose-600', lightBg: 'bg-rose-50', hoverBorder: 'hover:border-rose-400' },
+  amber: { bg: 'bg-amber-600', text: 'text-amber-600', border: 'border-amber-600', lightBg: 'bg-amber-50', hoverBorder: 'hover:border-amber-400' },
+};
 
 export const PROCESS_DATA: Phase[] = [
   {
@@ -26,7 +38,7 @@ export const PROCESS_DATA: Phase[] = [
     id: 'P2',
     name: '2. Planeación Estratégica Social',
     description: 'Articulación comunitaria y sensibilización para asegurar el acceso a territorio.',
-    color: 'blue',
+    color: 'cyan',
     steps: [
       {
         id: '2.1',
@@ -46,7 +58,7 @@ export const PROCESS_DATA: Phase[] = [
     id: 'P3',
     name: '3. Validación en Sistema OPEN',
     description: 'Aseguramiento de la integridad de datos comerciales en la plataforma de EPM.',
-    color: 'blue',
+    color: 'sky',
     steps: [
       {
         id: '3.1',
@@ -66,7 +78,7 @@ export const PROCESS_DATA: Phase[] = [
     id: 'P4',
     name: '4. Verificación y Censo de Campo',
     description: 'Inspección física detallada de la infraestructura y clasificación de predios.',
-    color: 'blue',
+    color: 'indigo',
     steps: [
       {
         id: '4.1',
@@ -86,7 +98,7 @@ export const PROCESS_DATA: Phase[] = [
     id: 'P5',
     name: '5. Programación de Logística',
     description: 'Asignación de recursos y optimización de rutas para la ejecución de obra.',
-    color: 'blue',
+    color: 'violet',
     steps: [
       {
         id: '5.1',
@@ -106,7 +118,7 @@ export const PROCESS_DATA: Phase[] = [
     id: 'P6',
     name: '6. Vinculación y Documental',
     description: 'Formalización legal del servicio y recolección de soportes contractuales.',
-    color: 'indigo',
+    color: 'purple',
     steps: [
       {
         id: '6.1',
@@ -126,7 +138,7 @@ export const PROCESS_DATA: Phase[] = [
     id: 'P7',
     name: '7. Instalación y Ejecución Técnica',
     description: 'Montaje de infraestructura de medición bajo normativa vigente.',
-    color: 'indigo',
+    color: 'fuchsia',
     steps: [
       {
         id: '7.1',
@@ -147,7 +159,7 @@ export const PROCESS_DATA: Phase[] = [
     id: 'P8',
     name: '8. Legalización en Sistema HIDRO',
     description: 'Registro digital de la ejecución técnica para activación comercial.',
-    color: 'amber',
+    color: 'pink',
     steps: [
       {
         id: '8.1',
@@ -168,7 +180,7 @@ export const PROCESS_DATA: Phase[] = [
     id: 'P9',
     name: '9. Gestión de Inconsistencias',
     description: 'Auditoría interna y resolución de rechazos técnicos o administrativos.',
-    color: 'amber',
+    color: 'rose',
     steps: [
       {
         id: '9.1',

@@ -1,6 +1,6 @@
-
 import React from 'react';
 import { Phase } from '../types';
+import { COLOR_CLASSES } from '../constants';
 
 interface Props {
   phases: Phase[];
@@ -8,40 +8,48 @@ interface Props {
 }
 
 const GrowthLayout: React.FC<Props> = ({ phases, onSelectPhase }) => {
-  const colorMap: Record<string, string> = {
-    blue: '#3b82f6',
-    indigo: '#6366f1',
-    emerald: '#10b981',
-    amber: '#f59e0b',
-    slate: '#475569',
+  // Paleta de colores hexadecimales para inline styles (SVG y Círculos)
+  const hexColors: Record<string, string> = {
+    blue: '#2563eb',
+    cyan: '#0891b2',
+    sky: '#0284c7',
+    indigo: '#4f46e5',
+    violet: '#7c3aed',
+    purple: '#9333ea',
+    fuchsia: '#c026d3',
+    pink: '#db2777',
+    rose: '#e11d48',
+    amber: '#d97706',
   };
 
   return (
-    <div className="flex-1 flex flex-col p-6 bg-[#f4f7f9] relative min-h-[2000px] overflow-x-hidden">
-      {/* Encabezado Corporativo */}
-      <div className="text-center mb-10 no-print">
-        <h2 className="text-4xl font-black text-slate-800 tracking-tight uppercase border-b-8 border-blue-600 inline-block pb-2 mb-2">
+    <div className="flex-1 flex flex-col p-8 bg-white relative min-h-[1800px] overflow-x-hidden">
+      {/* Título Principal - Estilo PDF */}
+      <div className="text-center mb-10">
+        <h2 className="text-4xl font-black text-slate-800 tracking-tighter uppercase border-b-8 border-blue-600 inline-block pb-2 mb-2">
           Dashboard de Gestión Comercial
         </h2>
-        <p className="text-slate-500 font-bold text-sm uppercase tracking-widest">Flujo de Proceso Integral Sin Omisiones - Vista Gerencial</p>
+        <p className="text-slate-500 font-extrabold text-sm uppercase tracking-widest block">
+          Flujo de Proceso Integral Detallado • 10 Estaciones de Control
+        </p>
       </div>
 
-      {/* Etiquetas de Ejes Temáticos con Proporción 5:2:3 */}
-      <div className="grid grid-cols-10 gap-2 mb-12 no-print font-black text-[11px] uppercase tracking-tighter shadow-lg">
-        <div className="col-span-5 bg-blue-700 text-white p-3 rounded-l-xl text-center flex items-center justify-center border-r-2 border-blue-800">
-          I. Planeación Estratégica (Fases 1-5)
+      {/* Etiquetas de Ejes Temáticos - Leyenda Superior */}
+      <div className="grid grid-cols-10 gap-2 mb-16 no-print">
+        <div className="col-span-5 bg-blue-700 text-white p-3 rounded-l-xl text-center text-[10px] font-black uppercase shadow-sm">
+          I. Planeación Estratégica (1-5)
         </div>
-        <div className="col-span-2 bg-indigo-700 text-white p-3 text-center flex items-center justify-center border-r-2 border-indigo-800">
-          II. Gestión Operativa (Fases 6-7)
+        <div className="col-span-2 bg-purple-700 text-white p-3 text-center text-[10px] font-black uppercase shadow-sm border-l border-r border-white/20">
+          II. Gestión Operativa (6-7)
         </div>
-        <div className="col-span-3 bg-amber-700 text-white p-3 rounded-r-xl text-center flex items-center justify-center">
-          III. Sistemas y Cierre Gerencial (Fases 8-10)
+        <div className="col-span-3 bg-amber-700 text-white p-3 rounded-r-xl text-center text-[10px] font-black uppercase shadow-sm">
+          III. Sistemas y Cierre (8-10)
         </div>
       </div>
 
       <div className="relative flex-1 flex flex-col">
-        {/* SVG Ribbon de Escalera - Trayectoria Dinámica para 10 Pasos */}
-        <div className="absolute inset-x-0 top-[120px] h-[500px] pointer-events-none px-4 no-print opacity-25">
+        {/* Línea de Guía SVG (Escalera) */}
+        <div className="absolute inset-x-0 top-[100px] h-[500px] pointer-events-none px-4 opacity-10">
           <svg width="100%" height="100%" viewBox="0 0 1000 500" preserveAspectRatio="none" className="overflow-visible">
             <path
               d={`M 0 500 
@@ -52,91 +60,101 @@ const GrowthLayout: React.FC<Props> = ({ phases, onSelectPhase }) => {
                    return `L ${stepX} ${y} L ${stepX} ${nextY}`;
                  }).join(' ')}`}
               fill="none"
-              stroke="#475569"
-              strokeWidth="14"
+              stroke="#000"
+              strokeWidth="24"
               strokeLinejoin="round"
               strokeLinecap="round"
             />
           </svg>
         </div>
 
-        {/* Contenedor de Fases - Grid de 10 columnas para alineación perfecta */}
+        {/* Mapeo de Fases */}
         <div className="flex justify-between items-start gap-1">
           {phases.map((phase, idx) => {
             const stepPercent = (100 / phases.length);
             const topOffset = (idx * (500 / phases.length));
-            const stepColor = colorMap[phase.color] || '#333';
+            const stepColor = hexColors[phase.color] || '#333';
+            const theme = COLOR_CLASSES[phase.color] || COLOR_CLASSES.blue;
 
             return (
               <div 
                 key={phase.id} 
-                className="relative z-10 flex flex-col items-center group" 
+                className="relative z-10 flex flex-col items-center" 
                 style={{ 
                   width: `${stepPercent}%`, 
                   marginTop: `${500 - topOffset}px` 
                 }}
               >
-                {/* Indicador de Escalón Circular Interactivo */}
+                {/* Círculo de Paso */}
                 <div 
-                  className="w-16 h-16 rounded-full flex flex-col items-center justify-center text-white shadow-2xl mb-6 cursor-pointer hover:scale-125 transition-all duration-500 ring-4 ring-white group-hover:ring-blue-400 group-hover:z-50"
+                  className="w-16 h-16 rounded-full flex flex-col items-center justify-center text-white shadow-xl mb-6 ring-4 ring-white cursor-pointer hover:scale-110 transition-transform no-print"
                   style={{ backgroundColor: stepColor }}
                   onClick={() => onSelectPhase?.(phase)}
                 >
-                  <span className="text-[10px] font-bold opacity-70 uppercase leading-none">Paso</span>
                   <span className="text-2xl font-black leading-none">{idx + 1}</span>
                 </div>
+                {/* Círculo visible en PDF */}
+                <div 
+                  className="hidden print:flex w-12 h-12 rounded-full flex-col items-center justify-center text-white mb-4"
+                  style={{ backgroundColor: stepColor }}
+                >
+                  <span className="text-xl font-black leading-none">{idx + 1}</span>
+                </div>
 
-                {/* BLOQUE DE INFORMACIÓN EXTENSA (Sin resúmenes) */}
-                <div className="w-full px-1 text-left">
-                  {/* Título de Fase Principal */}
-                  <div className="mb-4 text-center">
-                    <h3 className="text-[11px] font-black text-slate-900 uppercase leading-none mb-2 min-h-[40px] flex items-center justify-center tracking-tighter">
+                {/* Bloque de Información */}
+                <div className="w-full px-1 text-left page-break-inside-avoid">
+                  <div className="mb-6 text-center">
+                    <h3 
+                      className="text-[11px] font-black uppercase leading-none mb-2 min-h-[45px] flex items-center justify-center tracking-tighter"
+                      style={{ color: stepColor }}
+                    >
                       {phase.name.replace(/^\d+\.\s/, '')}
                     </h3>
-                    <div className="h-1.5 w-12 mx-auto rounded-full mb-3" style={{ backgroundColor: stepColor }}></div>
-                    <p className="text-[9px] text-slate-500 italic leading-snug px-1 font-semibold">
+                    <div className="h-1 w-10 mx-auto rounded-full mb-3" style={{ backgroundColor: stepColor }}></div>
+                    <p className="text-[8px] text-slate-400 italic font-bold leading-tight px-1">
                       {phase.description}
                     </p>
                   </div>
                   
-                  {/* Lista de Detalles Completos */}
+                  {/* Pasos detallados */}
                   <div className="space-y-4">
                     {phase.steps.map((s) => (
                       <div 
                         key={s.id} 
-                        className={`p-3 rounded-xl border-2 bg-white shadow-lg transition-all group-hover:border-${phase.color}-400 ${s.critical ? 'border-red-500 bg-red-50' : 'border-slate-100'}`}
+                        className={`p-3 rounded-xl border-t-4 bg-white shadow-md border-slate-100 ${s.critical ? 'border-red-500 bg-red-50/20' : ''}`}
+                        style={!s.critical ? { borderTopColor: stepColor } : {}}
                       >
                         <div className="flex items-center justify-between mb-2">
-                           <span className={`text-[8px] font-black px-2 py-0.5 rounded-full ${s.critical ? 'bg-red-500 text-white' : 'bg-slate-800 text-white'}`}>
+                           <span 
+                             className="text-[8px] font-black px-1.5 py-0.5 rounded text-white"
+                             style={{ backgroundColor: s.critical ? '#ef4444' : stepColor }}
+                           >
                              {s.id}
                            </span>
                            {s.critical && (
-                             <span className="text-[7px] text-red-600 font-black animate-pulse uppercase">Control Crítico</span>
+                             <span className="text-[6px] text-red-600 font-black uppercase tracking-widest">¡Crítico!</span>
                            )}
                         </div>
                         
-                        <h4 className="text-[10px] font-black text-slate-800 mb-3 leading-tight uppercase border-b border-slate-100 pb-1">
+                        <h4 className="text-[9px] font-black text-slate-900 mb-2 leading-tight uppercase border-b border-slate-50 pb-1 tracking-tighter">
                           {s.title}
                         </h4>
                         
                         <ul className="space-y-2 mb-4">
                           {s.detail.map((d, i) => (
-                            <li key={i} className="flex gap-1.5 text-[9px] text-slate-700 leading-normal font-medium">
-                              <span className="text-blue-500 font-bold">▶</span>
+                            <li key={i} className="flex gap-1 text-[8px] text-slate-700 leading-normal font-medium">
+                              <span style={{ color: stepColor }} className="font-black">●</span>
                               <span>{d}</span>
                             </li>
                           ))}
                         </ul>
 
-                        <div className="pt-2 border-t border-slate-100 bg-slate-50 -mx-3 -mb-3 rounded-b-xl px-3 pb-2">
-                           <p className="text-[7px] text-slate-400 font-black uppercase mb-1 tracking-widest">Responsables Asignados:</p>
-                           <div className="flex flex-wrap gap-1">
-                             {s.responsibles.map((r, i) => (
-                               <span key={i} className="text-[7px] bg-white text-slate-700 px-1.5 py-0.5 rounded border border-slate-200 font-black shadow-sm">
-                                 {r}
-                               </span>
-                             ))}
-                           </div>
+                        <div className="mt-auto pt-2 border-t border-slate-50 flex flex-wrap gap-1">
+                          {s.responsibles.map((r, i) => (
+                            <span key={i} className="text-[7px] px-1.5 py-0.5 bg-slate-100 text-slate-500 rounded font-bold uppercase border border-slate-200">
+                              {r}
+                            </span>
+                          ))}
                         </div>
                       </div>
                     ))}
@@ -147,33 +165,25 @@ const GrowthLayout: React.FC<Props> = ({ phases, onSelectPhase }) => {
           })}
         </div>
       </div>
-
-      {/* Pie de Página Gerencial - Información de Respaldo */}
+      
+      {/* Pie de Página Gerencial */}
       <div className="mt-20 pt-10 border-t-4 border-slate-800 grid grid-cols-4 gap-6 text-[10px] text-slate-600">
-        <div className="col-span-1 border-r border-slate-300 pr-6">
-          <h5 className="font-black text-slate-900 uppercase mb-2 text-xs">Propósito del Flujo</h5>
-          <p className="leading-relaxed">Estandarización absoluta del proceso comercial para garantizar que cada vinculación sea legalmente válida, técnicamente perfecta y comercialmente activa en los sistemas OPEN e HIDRO de EPM.</p>
+        <div className="col-span-1 border-r border-slate-200 pr-6">
+          <h5 className="font-black text-slate-900 uppercase mb-2">Propósito del Flujo</h5>
+          <p>Estandarización absoluta del proceso comercial para asegurar que cada vinculación sea legalmente válida y comercialmente activa en sistemas EPM.</p>
         </div>
-        <div className="col-span-1 border-r border-slate-300 pr-6">
-          <h5 className="font-black text-slate-900 uppercase mb-2 text-xs">Soberanía de Datos</h5>
-          <p className="leading-relaxed font-bold">• Sistema OPEN: Base comercial activa.<br/>• Sistema HIDRO: Registro técnico de obra.<br/>• Drive Corporativo: Trazabilidad documental.</p>
+        <div className="col-span-1 border-r border-slate-200 pr-6">
+          <h5 className="font-black text-slate-900 uppercase mb-2">Sistemas Implicados</h5>
+          <p className="font-bold">• OPEN: Comercial.<br/>• HIDRO: Técnico.<br/>• DRIVE: Documental.</p>
         </div>
-        <div className="col-span-1 border-r border-slate-300 pr-6">
-          <h5 className="font-black text-slate-900 uppercase mb-2 text-xs">Protocolos de Control</h5>
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-3 h-3 rounded-full bg-red-600 shadow-sm animate-pulse"></div> 
-            <span className="font-bold">CRÍTICO: Validaciones de sistema y firmas legales.</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="w-3 h-3 rounded-full bg-slate-400 shadow-sm"></div> 
-            <span>OPERATIVO: Ejecución estándar en campo.</span>
-          </div>
+        <div className="col-span-1 border-r border-slate-200 pr-6">
+          <h5 className="font-black text-slate-900 uppercase mb-2">Control de Calidad</h5>
+          <p>Cada estación de control requiere la validación de los responsables asignados. Puntos críticos en rojo requieren supervisión inmediata.</p>
         </div>
-        <div className="col-span-1 text-right italic font-bold text-slate-400">
-          <p className="text-slate-900 text-xs mb-1 uppercase tracking-tighter">Documento de Carácter Operativo-Gerencial</p>
-          <p>No compartir sin autorización de Planeación.</p>
-          <p>Última Revisión: Marzo 2024</p>
-          <p className="text-blue-600">Fundación en Alianza con EPM</p>
+        <div className="col-span-1 text-right italic font-black text-slate-400">
+          <p className="text-slate-900 uppercase text-xs">Uso Exclusivo Gerencial</p>
+          <p>Fundación en Alianza con EPM</p>
+          <p>Versión 2024.3</p>
         </div>
       </div>
     </div>
