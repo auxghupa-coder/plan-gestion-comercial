@@ -23,7 +23,7 @@ const GrowthLayout: React.FC<Props> = ({ phases, onSelectPhase }) => {
   };
 
   return (
-    <div className="flex-1 flex flex-col p-8 bg-white relative min-h-[1800px] overflow-x-hidden">
+    <div className="flex-1 flex flex-col p-8 bg-white relative md:min-h-[1800px] print:min-h-0 overflow-x-hidden">
       {/* Título Principal - Estilo PDF */}
       <div className="text-center mb-10">
         <h2 className="text-4xl font-black text-slate-800 tracking-tighter uppercase border-b-8 border-blue-600 inline-block pb-2 mb-2">
@@ -48,8 +48,8 @@ const GrowthLayout: React.FC<Props> = ({ phases, onSelectPhase }) => {
       </div>
 
       <div className="relative flex-1 flex flex-col">
-        {/* Línea de Guía SVG (Escalera) */}
-        <div className="absolute inset-x-0 top-[100px] h-[500px] pointer-events-none px-4 opacity-10">
+        {/* Línea de Guía SVG (Escalera) - Forzamos stroke para impresión */}
+        <div className="absolute inset-x-0 top-[100px] h-[500px] pointer-events-none px-4 opacity-10 print:opacity-20">
           <svg width="100%" height="100%" viewBox="0 0 1000 500" preserveAspectRatio="none" className="overflow-visible">
             <path
               d={`M 0 500 
@@ -60,8 +60,8 @@ const GrowthLayout: React.FC<Props> = ({ phases, onSelectPhase }) => {
                    return `L ${stepX} ${y} L ${stepX} ${nextY}`;
                  }).join(' ')}`}
               fill="none"
-              stroke="#000"
-              strokeWidth="24"
+              stroke="black"
+              strokeWidth="12"
               strokeLinejoin="round"
               strokeLinecap="round"
             />
@@ -74,7 +74,6 @@ const GrowthLayout: React.FC<Props> = ({ phases, onSelectPhase }) => {
             const stepPercent = (100 / phases.length);
             const topOffset = (idx * (500 / phases.length));
             const stepColor = hexColors[phase.color] || '#333';
-            const theme = COLOR_CLASSES[phase.color] || COLOR_CLASSES.blue;
 
             return (
               <div 
@@ -93,7 +92,7 @@ const GrowthLayout: React.FC<Props> = ({ phases, onSelectPhase }) => {
                 >
                   <span className="text-2xl font-black leading-none">{idx + 1}</span>
                 </div>
-                {/* Círculo visible en PDF */}
+                {/* Círculo visible solo en PDF */}
                 <div 
                   className="hidden print:flex w-12 h-12 rounded-full flex-col items-center justify-center text-white mb-4"
                   style={{ backgroundColor: stepColor }}
@@ -102,7 +101,7 @@ const GrowthLayout: React.FC<Props> = ({ phases, onSelectPhase }) => {
                 </div>
 
                 {/* Bloque de Información */}
-                <div className="w-full px-1 text-left page-break-inside-avoid">
+                <div className="w-full px-1 text-left break-inside-avoid">
                   <div className="mb-6 text-center">
                     <h3 
                       className="text-[11px] font-black uppercase leading-none mb-2 min-h-[45px] flex items-center justify-center tracking-tighter"
